@@ -4,9 +4,13 @@ Arduino AttoPilot Sensor
 Use an Arduino to read Attopilot voltage sensor.
 
 Uses the following pinout:
+
 Sensor Pin to Arduino Pin
+
 V to A0			
+
 I to A1
+
 GND	to GND
 
 
