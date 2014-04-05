@@ -11,6 +11,10 @@
 #define SENSOR_90_MV_TO_VOLT	63.69	
 #define SENSOR_13_MV_TO_VOLT	242.3
 
+#define SENSOR_180_MV_TO_CURRENT	18.30
+#define SENSOR_90_MV_TO_CURRENT	36.60	
+#define SENSOR_13_MV_TO_CURRENT	73.20
+
 // adjust this to whatever you are comfortable with
 #define LOW_LIPO_VOLTAGE		11.0
 
@@ -29,8 +33,17 @@ void loop() {
 	// convert analog arduino units to mV units 
 	float raw_mV = raw_V * MV_TO_ANALOG;
 
-	// convert mV units to sensor values
+	// convert mV units to sensor values for voltage
 	float v_sensor = raw_mV / SENSOR_180_MV_TO_VOLT;
+
+	// get the analog output from the sensor
+	float raw_I = analogRead(A1);
+
+	// convert analog arduino units to mV units 
+	float raw_i_mV = raw_I * MV_TO_ANALOG;
+
+	// convert mV units to sensor values for current
+	float i_sensor = raw_i_mV / SENSOR_180_MV_TO_CURRENT;
 
 	// voltage is too low so sound alarm
 	if(v_sensor < LOW_LIPO_VOLTAGE)
@@ -38,10 +51,10 @@ void loop() {
 		digitalWrite(8, HIGH);
 	}
 
-	Serial.print(raw_V);
+	Serial.print(v_sensor);
 	Serial.print('\t');
-	Serial.print(raw_mV);
-	Serial.print('\t');
-	Serial.println(v_sensor);
+	Serial.println(i_sensor);
+
+
 	delay(100);
 }
